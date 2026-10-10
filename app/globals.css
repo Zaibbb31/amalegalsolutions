@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F5F0E7;
+  --foreground: #30261C; /* Using brand brown for default text */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope);
+  --color-brand-brown: #30261C;
+  --color-brand-yellow: #D29E0D;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background-color: #F5F0E7; /* beige background */
+  background-image: radial-gradient(#D29E0D40 1px, transparent 1px); /* brand yellow dots (25% opacity) */
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: var(--font-manrope), sans-serif;
+}
+
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 25s linear infinite;
+}
