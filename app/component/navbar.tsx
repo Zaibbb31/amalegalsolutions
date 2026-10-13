@@ -112,7 +112,7 @@ export default function Navbar({
           <Link
             href="#contact"
             onClick={(e) => handleNavClick(e, "#contact")}
-            className={`inline-flex items-center justify-center rounded-full px-5 py-2 text-xs font-medium shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 sm:text-sm ${
+            className={`inline-flex items-center justify-center  px-5 py-2 text-xs font-medium shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 sm:text-sm ${
               isLight
                 ? "border border-[#30261C]/20 bg-[#30261C]/5 text-[#30261C] hover:bg-[#30261C]/10 hover:border-[#30261C]/30"
                 : "border border-white/20 bg-neutral-800/80 text-white hover:border-white/35 hover:bg-neutral-700/80"

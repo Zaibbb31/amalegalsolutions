@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import HeroSection from "./component/hero";
 import Navbar from "./component/navbar";
+import FaqSection from "./component/faq";
 import { ShieldCheck, Briefcase, Users, Globe, Scale, Landmark, ArrowRight, Handshake, Lightbulb, Building2 } from "lucide-react";
 
 function TrustSection({ className = "" }: { className?: string }) {
@@ -657,7 +658,7 @@ function ServicesSection() {
               <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed mb-6">
                 Operating out of premier modern chambers, our team combines regulatory acumen, financial dispute strategy, and court representation.
               </p>
-              <button className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#D29E0D] text-black text-xs sm:text-sm font-semibold hover:bg-[#FAF4EB] transition-all shadow-md group/btn cursor-pointer">
+              <button className="inline-flex items-center gap-2.5 px-6 py-3 bg-[#D29E0D] text-black text-xs sm:text-sm font-semibold hover:bg-[#FAF4EB] transition-all shadow-md group/btn cursor-pointer">
                 <span>Book a consultation</span>
                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
               </button>
@@ -699,7 +700,7 @@ function ServicesSection() {
                   {/* CTA Button */}
                   <div className="mt-4 sm:mt-8 pt-1 sm:pt-2">
                     <button
-                      className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md sm:rounded-lg border ${service.btnClass} text-[10px] sm:text-xs font-semibold transition-all shadow-xs group/btn cursor-pointer`}
+                      className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-4 sm:py-2 border ${service.btnClass} text-[10px] sm:text-xs font-semibold transition-all shadow-xs group/btn cursor-pointer`}
                     >
                       <span>Consult Now</span>
                       <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -715,17 +716,184 @@ function ServicesSection() {
   );
 }
 
+// ─── Testimonials Section ───────────────────────────────────────────────────
+
+const testimonials = [
+  {
+    src: "/testi/testivid1.mp4",
+    label: "Client Story",
+    name: "Loan Settlement",
+  },
+  {
+    src: "/testi/testivid2.mp4",
+    label: "Client Story",
+    name: "Banking Dispute",
+  },
+  {
+    src: "/testi/testivid3.mp4",
+    label: "Client Story",
+    name: "Corporate Law",
+  },
+  {
+    src: "/testi/testivid4.mp4",
+    label: "Client Story",
+    name: "IPR Protection",
+  },
+];
+
+function TestimonialsSection() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (!trackRef.current) return;
+    isDragging.current = true;
+    startX.current = e.pageX - trackRef.current.offsetLeft;
+    scrollLeft.current = trackRef.current.scrollLeft;
+    trackRef.current.style.cursor = "grabbing";
+    trackRef.current.style.userSelect = "none";
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !trackRef.current) return;
+    const x = e.pageX - trackRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.4;
+    trackRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const stopDrag = () => {
+    isDragging.current = false;
+    if (trackRef.current) {
+      trackRef.current.style.cursor = "grab";
+      trackRef.current.style.userSelect = "";
+    }
+  };
+
+  return (
+    <section
+      id="testimonials"
+      className="relative w-full bg-[#1A1209] py-16 sm:py-24 px-6 sm:px-10 lg:px-16 selection:bg-[#D29E0D] selection:text-black overflow-hidden"
+    >
+      {/* Subtle warm radial glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(210,158,13,0.08),transparent)]" />
+
+      <div className="mx-auto max-w-7xl">
+        {/* Section Header */}
+        <div className="flex flex-col items-start text-left max-w-3xl mb-10 sm:mb-14">
+          <span className="inline-flex items-center text-[11px] font-mono tracking-widest text-[#D29E0D] uppercase font-semibold">
+            CLIENT VOICES
+          </span>
+          <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.15]">
+            Real people. Real outcomes.
+          </h2>
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-neutral-400 leading-relaxed font-normal">
+            Hear directly from clients whose lives and businesses were transformed through our legal counsel.
+          </p>
+        </div>
+
+        {/* Desktop: 4 cards in a row | Mobile: draggable horizontal scroll */}
+        <div
+          ref={trackRef}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={stopDrag}
+          onMouseLeave={stopDrag}
+          className="
+            flex gap-4 sm:gap-5
+            overflow-x-auto md:overflow-x-visible
+            scroll-smooth
+            snap-x snap-mandatory md:snap-none
+            pb-4 md:pb-0
+            cursor-grab md:cursor-default
+            [-webkit-overflow-scrolling:touch]
+            [scrollbar-width:none]
+            [&::-webkit-scrollbar]:hidden
+          "
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          {testimonials.map((t, i) => (
+            <div
+              key={i}
+              className="
+                relative flex-shrink-0
+                w-[72vw] sm:w-[55vw] md:w-0 md:flex-1
+                snap-center
+                 overflow-hidden
+                bg-neutral-900 border border-white/10
+                shadow-[0_8px_40px_rgba(0,0,0,0.5)]
+                group
+              "
+              style={{ aspectRatio: "9/16" }}
+            >
+              {/* Video */}
+              <video
+                src={t.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+
+              {/* Dark gradient overlay at bottom */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+              
+              {/* Bottom caption */}
+              <div className="absolute bottom-5 left-4 right-4">
+                <p className="text-xs font-mono tracking-widest text-neutral-400 uppercase">
+                  {t.name}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile drag hint */}
+        <p className="mt-5 text-center text-[11px] font-mono tracking-widest text-neutral-600 uppercase md:hidden">
+          ← Drag to explore →
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
+  const [navbarVisible, setNavbarVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Hero is h-[220vh] — show light navbar once we've scrolled past the full hero container
+      // We watch for the top of the content div (right after hero) entering the viewport.
+      // A simple proxy: scrollY > (window.innerHeight * 1.95)
+      const threshold = window.innerHeight * 1.95;
+      setNavbarVisible(window.scrollY >= threshold);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <main className="relative w-full bg-[#FAF4EB]">
+      {/* Fixed Light Theme Navbar — slides in once hero scroll is complete */}
+      <div
+        className="fixed top-0 left-0 right-0 z-[60] transition-transform duration-300 ease-out"
+        style={{
+          transform: navbarVisible ? "translateY(0)" : "translateY(-110%)",
+        }}
+      >
+        <Navbar theme="light" />
+      </div>
+
       {/* Scroll-zoom Doorway Hero Section */}
       <HeroSection />
 
       {/* Main Content Sections in Natural Window Document Flow */}
       <div className="relative z-20 w-full bg-[#FAF4EB]">
-        {/* Sticky Light Theme Navbar */}
-        <Navbar theme="light" className="sticky top-0 z-50" />
-
         {/* The AMA Approach Section */}
         <div id="approach">
           <TrustSection />
@@ -759,6 +927,16 @@ export default function Home() {
         {/* Services Section: Office Hero Card + 4 Practice Areas */}
         <div id="services">
           <ServicesSection />
+        </div>
+
+        {/* Testimonials Section: 4 Video Cards */}
+        <div id="testimonials">
+          <TestimonialsSection />
+        </div>
+
+        {/* FAQ Section */}
+        <div id="faq">
+          <FaqSection />
         </div>
 
         {/* Footer */}

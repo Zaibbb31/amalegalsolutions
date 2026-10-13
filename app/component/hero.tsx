@@ -16,8 +16,15 @@ const servicesList = [
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
@@ -31,15 +38,19 @@ export default function HeroSection() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   // UI Content fade & slide up quickly during the first ~25% of scroll
   const contentOpacity = Math.max(0, 1 - progress * 4.0);
   const contentTranslateY = -(progress * 60);
 
-  // Exponential zoom into the door center (50% 48%)
-  const imageScale = 1 + Math.pow(Math.min(progress / 0.85, 1), 2) * 24;
+  // Exponential zoom into the door center (50% 48%) - 1 on desktop (untouched)
+  const baseScale = 1;
+  const imageScale = baseScale + Math.pow(Math.min(progress / 0.85, 1), 2) * 24;
 
   // Pure #FAF4EB overlay takeover between 65% and 95%
   const whiteOpacity =
@@ -54,7 +65,7 @@ export default function HeroSection() {
       className="relative h-[220vh] w-full bg-black"
     >
       {/* Sticky Fullscreen Viewport */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#FAF4EB]">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
         {/* Background Image with Zoom centered at the door */}
         <div
           className="absolute inset-0 h-full w-full will-change-transform"
@@ -70,11 +81,11 @@ export default function HeroSection() {
             fill
             priority
             quality={95}
-            className="object-cover object-center select-none pointer-events-none"
+            className="object-contain md:object-cover object-center select-none pointer-events-none"
           />
         </div>
 
-        {/* Ambient Dark Gradients for contrast while hero content is visible */}
+        {/* Ambient Dark Gradients for contrast while hero content is visible (Original gradient) */}
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/60 transition-opacity duration-300"
           style={{ opacity: contentOpacity }}
@@ -192,9 +203,9 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Right Column: Service Highlights Stack */}
-            <div className="flex flex-col items-start lg:items-end justify-end lg:col-span-5">
-              <div className="space-y-2.5 text-left lg:text-right">
+            {/* Right Column: Service Highlights Stack (Hidden on Mobile) */}
+            <div className="hidden lg:flex flex-col items-end justify-end lg:col-span-5">
+              <div className="space-y-2.5 text-right">
                 {servicesList.map((service, index) => (
                   <p
                     key={index}
