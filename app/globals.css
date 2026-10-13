@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F5F0E7;
+  --background: #FAF4EB;
   --foreground: #30261C; /* Using brand brown for default text */
 }
 
@@ -21,7 +21,7 @@
 }
 
 body {
-  background-color: #F5F0E7; /* beige background */
+  background-color: #FAF4EB;
   background-image: radial-gradient(#D29E0D40 1px, transparent 1px); /* brand yellow dots (25% opacity) */
   background-size: 20px 20px;
   background-attachment: fixed;
@@ -31,9 +31,18 @@ body {
 
 @keyframes marquee-left {
   0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
 }
 
 .animate-marquee-left {
-  animation: marquee-left 25s linear infinite;
+  animation: marquee-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
 }

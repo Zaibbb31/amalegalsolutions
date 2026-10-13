@@ -1,137 +1,189 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-function AnimatedText({ text }: { text: string }) {
-  const chars = text.split("");
-  return (
-    <span className="relative overflow-hidden inline-flex">
-      {chars.map((char, index) => {
-        const delay = (chars.length - 1 - index) * 35; // 35ms stagger from right to left
-        return (
-          <span
-            key={index}
-            className="relative flex flex-col transition-transform duration-300 ease-in-out group-hover:translate-y-full"
-            style={{ transitionDelay: `${delay}ms` }}
-          >
-            <span className="absolute bottom-full left-0 w-full flex justify-center" aria-hidden="true">
-              {char === " " ? "\u00A0" : char}
-            </span>
-            <span>{char === " " ? "\u00A0" : char}</span>
-          </span>
-        );
-      })}
-    </span>
-  );
+interface NavItem {
+  label: string;
+  href: string;
 }
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+const navItems: NavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "About us", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Blogs", href: "#blogs" },
+];
+
+interface NavbarProps {
+  className?: string;
+  style?: React.CSSProperties;
+  theme?: "dark" | "light";
+}
+
+export default function Navbar({
+  className = "",
+  style,
+  theme = "dark",
+}: NavbarProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isLight = theme === "light";
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href === "/" || href === "#home" || href === "#") {
+      e.preventDefault();
+      setMobileMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      setMobileMenuOpen(false);
+
+      const targetId = href.replace("#", "");
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      if (typeof window !== "undefined") {
+        window.history.pushState(null, "", href);
+      }
+    }
+  };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isOpen ? "bg-[#F5F0E7] border-b-transparent" : "bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/40"
-    }`}>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-50 bg-inherit">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3">
-              <Image 
-                src="/Logo.svg" 
-                alt="Logo" 
-                width={40} 
-                height={40} 
-                className="w-45 h-45 object-contain" 
-              />
-            </Link>
+    <header
+      style={style}
+      className={`sticky top-0 left-0 right-0 z-50 w-full border-b backdrop-blur-md transition-all duration-200 ${
+        isLight
+          ? "border-[#30261C]/10 bg-[#FAF4EB]/90 text-[#30261C] shadow-[0_1px_3px_rgba(48,38,28,0.04)]"
+          : "border-white/[0.08] bg-black/25 text-white"
+      } ${className}`}
+    >
+      <div className="relative mx-auto flex h-20 max-w-8xl items-center justify-between px-6 sm:px-8 lg:px-12">
+        {/* Left: Logo using Logo.svg */}
+        <Link
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="group flex items-center transition-opacity"
+        >
+          <div className="relative h-9 w-44 sm:h-10 sm:w-52">
+            <Image
+              src="/Logo.svg"
+              alt="AMA Legal Solutions"
+              fill
+              priority
+              className={`object-contain object-left ${
+                isLight ? "" : "brightness-0 invert"
+              }`}
+            />
           </div>
+        </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="group text-brand-brown/80 hover:text-brand-brown font-medium transition-colors">
-              <AnimatedText text="Home" />
-            </Link>
-            <Link href="/about" className="group text-brand-brown/80 hover:text-brand-brown font-medium transition-colors">
-              <AnimatedText text="About" />
-            </Link>
-            <Link href="/blog" className="group text-brand-brown/80 hover:text-brand-brown font-medium transition-colors">
-              <AnimatedText text="Blog" />
-            </Link>
-            <Link href="/blog-details" className="group text-brand-brown/80 hover:text-brand-brown font-medium transition-colors">
-              <AnimatedText text="Blog Details" />
-            </Link>
-          </div>
-
-          {/* Contact Button */}
-          <div className="hidden md:flex items-center">
-            <Link href="/contact" className="group bg-[#E3DCD1] text-brand-brown px-6 py-2 rounded font-medium hover:bg-[#D5CECD] transition-colors inline-flex">
-              <AnimatedText text="Contact" />
-            </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-4">
-            <Link href="/contact" className="group bg-[#E3DCD1] text-brand-brown px-4 py-1.5 rounded text-sm font-medium hover:bg-[#D5CECD] transition-colors inline-flex">
-              <AnimatedText text="Contact" />
-            </Link>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-brand-brown hover:text-brand-yellow focus:outline-none"
+        {/* Center: Desktop Navigation Links centered horizontally */}
+        <nav className="hidden items-center gap-6 md:flex lg:gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
+                isLight
+                  ? "text-[#30261C]/80 hover:text-[#30261C]"
+                  : "text-neutral-300 hover:text-white"
+              }`}
             >
-              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Marquee Ribbon */}
-      <div className={`absolute top-[5rem] left-0 w-full overflow-hidden bg-brand-yellow text-brand-brown border-y border-brand-brown/10 py-2 flex shadow-sm transition-all duration-300 ${isOpen ? "opacity-0 -z-10" : "opacity-100 z-40"}`}>
-        <div className="flex whitespace-nowrap animate-marquee-left w-max">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex gap-8 px-4 items-center font-bold text-sm tracking-widest uppercase">
-              <span>Trusted Counsel</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Proven Expertise</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Client Commitment</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Legal Excellence</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Strategic Solutions</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Ethical Advocacy</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Dedicated Support</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-              <span>Lasting Trust</span> <span className="w-1.5 h-1.5 rounded-full bg-brand-brown"></span>
-            </div>
+              {item.label}
+            </Link>
           ))}
+        </nav>
+
+        {/* Right: Book a Call CTA + Mobile Hamburger */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
+            className={`inline-flex items-center justify-center rounded-full px-5 py-2 text-xs font-medium shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 sm:text-sm ${
+              isLight
+                ? "border border-[#30261C]/20 bg-[#30261C]/5 text-[#30261C] hover:bg-[#30261C]/10 hover:border-[#30261C]/30"
+                : "border border-white/20 bg-neutral-800/80 text-white hover:border-white/35 hover:bg-neutral-700/80"
+            }`}
+          >
+            Book a call
+          </Link>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            aria-label="Toggle navigation menu"
+            className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:hidden ${
+              isLight
+                ? "text-neutral-800 hover:text-black"
+                : "text-neutral-300 hover:text-white"
+            }`}
+          >
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.75"
+              stroke="currentColor"
+            >
+              {mobileMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              )}
+            </svg>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div 
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out relative z-50 bg-[#F5F0E7] ${
-          isOpen ? "max-h-[100dvh] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="h-[calc(100dvh-5rem)] px-8 pt-12 flex flex-col gap-6">
-          <Link href="/" onClick={() => setIsOpen(false)} className="group text-brand-brown font-medium text-2xl w-fit">
-            <AnimatedText text="Home" />
-          </Link>
-          <Link href="/about" onClick={() => setIsOpen(false)} className="group text-brand-brown font-medium text-2xl w-fit">
-            <AnimatedText text="About" />
-          </Link>
-          <Link href="/blog" onClick={() => setIsOpen(false)} className="group text-brand-brown font-medium text-2xl w-fit">
-            <AnimatedText text="Blog" />
-          </Link>
-          <Link href="/blog-details" onClick={() => setIsOpen(false)} className="group text-brand-brown font-medium text-2xl w-fit">
-            <AnimatedText text="404" />
-          </Link>
+      {/* Mobile Dropdown Menu without brackets */}
+      {mobileMenuOpen && (
+        <div
+          className={`border-t px-6 py-5 backdrop-blur-xl md:hidden ${
+            isLight
+              ? "border-[#30261C]/10 bg-[#FAF4EB]/95 text-[#30261C]"
+              : "border-white/[0.08] bg-black/90 text-white"
+          }`}
+        >
+          <nav className="flex flex-col items-center text-center gap-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className={`py-1 text-base font-medium tracking-wide transition-colors ${
+                  isLight
+                    ? "text-neutral-800 hover:text-black"
+                    : "text-neutral-300 hover:text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
-      </div>
-    </nav>
+      )}
+    </header>
   );
 }
