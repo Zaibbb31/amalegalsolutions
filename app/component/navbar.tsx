@@ -60,7 +60,7 @@ export default function Navbar({
   return (
     <header
       style={style}
-      className={`sticky top-0 left-0 right-0 z-50 w-full border-b backdrop-blur-md transition-all duration-200 ${
+      className={`sticky top-0 left-0 right-0 z-50 w-full border-b backdrop-blur-md transition-all duration-200 relative ${
         isLight
           ? "border-[#30261C]/10 bg-[#FAF4EB]/90 text-[#30261C] shadow-[0_1px_3px_rgba(48,38,28,0.04)]"
           : "border-white/[0.08] bg-black/25 text-white"
@@ -157,10 +157,10 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu without brackets */}
+      {/* Mobile Dropdown Menu - absolutely positioned so it overlays content without pushing it down */}
       {mobileMenuOpen && (
         <div
-          className={`border-t px-6 py-5 backdrop-blur-xl md:hidden ${
+          className={`absolute left-0 right-0 top-full border-t px-6 py-5 backdrop-blur-xl md:hidden ${
             isLight
               ? "border-[#30261C]/10 bg-[#FAF4EB]/95 text-[#30261C]"
               : "border-white/[0.08] bg-black/90 text-white"

@@ -49,7 +49,7 @@ export default function HeroSection() {
   const contentTranslateY = -(progress * 60);
 
   // Exponential zoom into the door center (50% 48%) - 1 on desktop (untouched)
-  const baseScale = 1;
+  const baseScale = isMobile ? 1.5 : 1;
   const imageScale = baseScale + Math.pow(Math.min(progress / 0.85, 1), 2) * 24;
 
   // Pure #FAF4EB overlay takeover between 65% and 95%
@@ -76,7 +76,7 @@ export default function HeroSection() {
           }}
         >
           <Image
-            src="/heroiamgenew.png"
+            src={isMobile ? "/herodesktop.png" : "/heroiamgenew.png"}
             alt="Hero Zoom Background"
             fill
             priority
@@ -104,7 +104,7 @@ export default function HeroSection() {
 
         {/* Hero Foreground Content */}
         <div
-          className="relative z-20 flex h-full w-full flex-col justify-end px-6 pb-28 pt-24 sm:px-10 sm:pb-36 lg:px-16 lg:pb-40"
+          className="relative z-20 flex h-full w-full flex-col justify-end px-6 pb-40 pt-8 sm:px-10 sm:pb-36 sm:pt-24 lg:px-16 lg:pb-40"
           style={{
             opacity: contentOpacity,
             transform: `translateY(${contentTranslateY}px)`,
