@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import Navbar from "../../component/navbar";
+import CTA from "../../component/cta";
+import Footer from "../../component/footer";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -522,30 +524,14 @@ function ServiceDetailContent() {
 
       {/* Hero Container with Rounded Frame & Background Sketch Effect */}
       <div className="w-full px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8">
-        <section className="relative mx-auto max-w-7xl rounded-3xl sm:rounded-[32px] border border-[#30261C]/15 bg-[#FBF7F0] p-6 sm:p-12 lg:p-16 overflow-hidden shadow-[0_4px_30px_rgba(48,38,28,0.04)]">
-          {/* Subtle Watermark Legal Illustration / Scales Line Art in Background */}
-          <div className="pointer-events-none absolute right-[-5%] top-[-10%] w-[420px] h-[420px] sm:w-[560px] sm:h-[560px] opacity-[0.04] select-none">
-            <svg
-              viewBox="0 0 200 200"
-              fill="none"
-              stroke="#30261C"
-              strokeWidth="2"
-              className="w-full h-full"
-            >
-              <rect x="20" y="30" width="160" height="140" rx="8" />
-              <line x1="40" y1="60" x2="160" y2="60" />
-              <line x1="40" y1="90" x2="140" y2="90" />
-              <line x1="40" y1="120" x2="110" y2="120" />
-              <circle cx="150" cy="130" r="20" />
-              <line x1="140" y1="130" x2="160" y2="130" />
-            </svg>
-          </div>
+        <section className="relative mx-auto max-w-7xl border border-[#30261C]/15 bg-[#30261C] p-6 sm:p-12 lg:p-16 overflow-hidden shadow-[0_4px_30px_rgba(48,38,28,0.04)]">
+          
 
           {/* Top: Back to Services Link */}
           <div className="relative z-10 mb-8 sm:mb-12">
             <Link
               href="/service"
-              className="inline-flex items-center gap-2 text-xs font-mono font-medium tracking-widest text-[#30261C]/60 hover:text-[#D29E0D] uppercase transition-colors group"
+              className="inline-flex items-center gap-2 text-xs font-mono font-medium tracking-widest text-[#FAF4EB]/60 hover:text-[#D29E0D] uppercase transition-colors group"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
               <span>BACK TO ALL SERVICES</span>
@@ -556,57 +542,57 @@ function ServiceDetailContent() {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end">
             {/* Left Column: Big Title & Subtitle */}
             <div className="lg:col-span-7">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-medium tracking-tight text-[#1A1F26] leading-[1.12]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-medium tracking-tight text-[#FAF4EB] leading-[1.12]">
                 {service.title}
               </h1>
-              <p className="mt-5 sm:mt-6 text-sm sm:text-base md:text-lg text-[#30261C]/80 font-normal leading-relaxed max-w-2xl">
+              <p className="mt-5 sm:mt-6 text-sm sm:text-base md:text-lg text-[#FAF4EB]/80 font-normal leading-relaxed max-w-2xl">
                 {service.subtitle}
               </p>
             </div>
 
             {/* Right Column: Metadata Table with Horizontal Lines */}
             <div className="lg:col-span-5 w-full">
-              <div className="divide-y divide-[#30261C]/10 border-t border-b border-[#30261C]/10">
+              <div className="divide-y divide-[#FAF4EB]/10 border-t border-b border-[#FAF4EB]/10">
                 {/* Row 1: Filed Under */}
                 <div className="py-3 sm:py-3.5 flex items-center justify-between text-xs sm:text-sm">
-                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#30261C]/60 uppercase">
+                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#FAF4EB]/60 uppercase">
                     FILED UNDER
                   </span>
-                  <span className="font-medium text-[#1A1F26] text-right">
+                  <span className="font-medium text-[#FAF4EB] text-right">
                     {service.filedUnder}
                   </span>
                 </div>
 
                 {/* Row 2: Published */}
                 <div className="py-3 sm:py-3.5 flex items-center justify-between text-xs sm:text-sm">
-                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#30261C]/60 uppercase">
+                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#FAF4EB]/60 uppercase">
                     PUBLISHED
                   </span>
-                  <span className="font-medium text-[#1A1F26]">
+                  <span className="font-medium text-[#FAF4EB]">
                     {service.published}
                   </span>
                 </div>
 
                 {/* Row 3: Reading Time */}
                 <div className="py-3 sm:py-3.5 flex items-center justify-between text-xs sm:text-sm">
-                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#30261C]/60 uppercase">
+                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#FAF4EB]/60 uppercase">
                     READING TIME
                   </span>
-                  <span className="font-medium text-[#1A1F26]">
+                  <span className="font-medium text-[#FAF4EB]">
                     {service.readingTime}
                   </span>
                 </div>
 
                 {/* Row 4: Written By */}
                 <div className="py-3 sm:py-3.5 flex items-start justify-between text-xs sm:text-sm">
-                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#30261C]/60 uppercase mt-0.5">
+                  <span className="font-mono text-[11px] sm:text-xs tracking-wider text-[#FAF4EB]/60 uppercase mt-0.5">
                     WRITTEN BY
                   </span>
                   <div className="text-right">
-                    <p className="font-medium text-[#1A1F26]">
+                    <p className="font-medium text-[#FAF4EB]">
                       {service.author}
                     </p>
-                    <p className="text-[11px] sm:text-xs text-[#30261C]/60">
+                    <p className="text-[11px] sm:text-xs text-[#FAF4EB]/60">
                       {service.authorRole}
                     </p>
                   </div>
@@ -624,7 +610,7 @@ function ServiceDetailContent() {
             {/* Left Column: Sticky Cards (Sticks just below navbar till right side content ends) */}
             <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6 self-start z-20">
               {/* Card 1: THE SHORT VERSION */}
-              <div className="rounded-2xl sm:rounded-[22px] border border-[#30261C]/15 bg-[#F6EFE6] p-6 sm:p-7 shadow-[0_2px_12px_rgba(48,38,28,0.03)]">
+              <div className=" border border-[#30261C]/15 bg-[#F6EFE6] p-6 sm:p-7 shadow-[0_2px_12px_rgba(48,38,28,0.03)]">
                 <h3 className="text-xs sm:text-sm font-mono tracking-widest text-[#30261C] uppercase font-bold mb-4">
                   THE SHORT VERSION
                 </h3>
@@ -633,7 +619,7 @@ function ServiceDetailContent() {
                   {service.shortVersion.map((point, pIdx) => (
                     <li key={pIdx} className="flex items-start gap-3">
                       {/* Terracotta/coral accent dot matching screenshot */}
-                      <span className="w-2 h-2 rounded-full bg-[#E06D53] shrink-0 mt-1.5" />
+                      <span className="w-2 h-2 bg-[#E06D53] shrink-0 mt-1.5" />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -641,7 +627,7 @@ function ServiceDetailContent() {
               </div>
 
               {/* Card 2: 5-Star Reviews & Confidential Consultation CTA */}
-              <div className="rounded-2xl sm:rounded-[22px] border border-[#30261C]/15 bg-white p-6 sm:p-7 shadow-[0_4px_20px_rgba(48,38,28,0.04)]">
+              <div className=" border border-[#30261C]/15 bg-white p-6 sm:p-7 shadow-[0_4px_20px_rgba(48,38,28,0.04)]">
                 {/* 5 Yellow Stars + Rating */}
                 <div className="flex items-center gap-1.5">
                   <div className="flex items-center text-[#D29E0D]">
@@ -668,7 +654,7 @@ function ServiceDetailContent() {
                 <div className="mt-5 pt-1">
                   <Link
                     href="/#contact"
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-[#1F1B18] text-[#FAF4EB] text-xs sm:text-sm font-semibold hover:bg-[#D29E0D] hover:text-black transition-all duration-200 shadow-sm group cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#1F1B18] text-[#FAF4EB] text-xs sm:text-sm font-semibold hover:bg-[#D29E0D] hover:text-black transition-all duration-200 shadow-sm group cursor-pointer"
                   >
                     <span>Tell us what happened</span>
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -715,7 +701,7 @@ function ServiceDetailContent() {
 
                 <Link
                   href="/#contact"
-                  className="shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#D29E0D] text-black text-xs sm:text-sm font-semibold hover:bg-[#30261C] hover:text-white transition-all shadow-sm"
+                  className="shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#D29E0D] text-black text-xs sm:text-sm font-semibold hover:bg-[#30261C] hover:text-white transition-all shadow-sm"
                 >
                   <PhoneCall className="w-3.5 h-3.5" />
                   <span>Schedule Consultation</span>
@@ -726,10 +712,11 @@ function ServiceDetailContent() {
         </div>
       </section>
 
+      {/* Call to Action Section */}
+      <CTA />
+
       {/* Footer */}
-      <footer className="border-t border-[#30261C]/15 bg-[#FAF4EB] px-6 py-12 text-center text-xs text-[#30261C]/60">
-        <p>© 2025 AMA Legal Solutions. All rights reserved.</p>
-      </footer>
+      <Footer />
     </main>
   );
 }

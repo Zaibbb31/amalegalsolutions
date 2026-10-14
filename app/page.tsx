@@ -5,6 +5,8 @@ import Image from "next/image";
 import HeroSection from "./component/hero";
 import Navbar from "./component/navbar";
 import FaqSection from "./component/faq";
+import CTA from "./component/cta";
+import Footer from "./component/footer";
 import { ShieldCheck, Briefcase, Users, Globe, Scale, Landmark, ArrowRight, Handshake, Lightbulb, Building2 } from "lucide-react";
 
 function TrustSection({ className = "" }: { className?: string }) {
@@ -939,10 +941,11 @@ export default function Home() {
           <FaqSection />
         </div>
 
+        {/* Call to Action Section */}
+        <CTA />
+
         {/* Footer */}
-        <footer className="border-t border-[#30261C]/15 bg-[#FAF4EB] px-6 py-12 text-center text-xs text-[#30261C]/60">
-          <p>© 2025 AMA Legal Solutions. All rights reserved.</p>
-        </footer>
+        <Footer />
       </div>
     </main>
   );

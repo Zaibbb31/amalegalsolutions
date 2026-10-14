@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../component/navbar";
+import CTA from "../component/cta";
+import Footer from "../component/footer";
 import {
   Landmark,
   Handshake,
@@ -22,6 +24,8 @@ import {
   ShieldCheck,
   CheckCircle2,
   PhoneCall,
+  MapPin,
+  Search,
 } from "lucide-react";
 
 interface ServiceCardData {
@@ -259,6 +263,54 @@ function isYellowCard(index: number): boolean {
   return col === 0 || col === 2;
 }
 
+interface JurisdictionItem {
+  name: string;
+  type: "State" | "Union Territory";
+  bench: string;
+  code: string;
+}
+
+const indianJurisdictions: JurisdictionItem[] = [
+  // 28 States
+  { name: "Andhra Pradesh", type: "State", bench: "High Court of Andhra Pradesh, Amaravati", code: "AP" },
+  { name: "Arunachal Pradesh", type: "State", bench: "Gauhati High Court Permanent Bench, Itanagar", code: "AR" },
+  { name: "Assam", type: "State", bench: "Gauhati High Court, Guwahati", code: "AS" },
+  { name: "Bihar", type: "State", bench: "Patna High Court, Patna", code: "BR" },
+  { name: "Chhattisgarh", type: "State", bench: "High Court of Chhattisgarh, Bilaspur", code: "CG" },
+  { name: "Goa", type: "State", bench: "High Court of Bombay at Goa, Panaji", code: "GA" },
+  { name: "Gujarat", type: "State", bench: "Gujarat High Court, Ahmedabad", code: "GJ" },
+  { name: "Haryana", type: "State", bench: "Punjab and Haryana High Court, Chandigarh", code: "HR" },
+  { name: "Himachal Pradesh", type: "State", bench: "Himachal Pradesh High Court, Shimla", code: "HP" },
+  { name: "Jharkhand", type: "State", bench: "Jharkhand High Court, Ranchi", code: "JH" },
+  { name: "Karnataka", type: "State", bench: "High Court of Karnataka, Bengaluru", code: "KA" },
+  { name: "Kerala", type: "State", bench: "High Court of Kerala, Ernakulam / Kochi", code: "KL" },
+  { name: "Madhya Pradesh", type: "State", bench: "Madhya Pradesh High Court, Jabalpur", code: "MP" },
+  { name: "Maharashtra", type: "State", bench: "High Court of Bombay, Mumbai", code: "MH" },
+  { name: "Manipur", type: "State", bench: "High Court of Manipur, Imphal", code: "MN" },
+  { name: "Meghalaya", type: "State", bench: "High Court of Meghalaya, Shillong", code: "ML" },
+  { name: "Mizoram", type: "State", bench: "Gauhati High Court Aizawl Bench, Aizawl", code: "MZ" },
+  { name: "Nagaland", type: "State", bench: "Gauhati High Court Kohima Bench, Kohima", code: "NL" },
+  { name: "Odisha", type: "State", bench: "Orissa High Court, Cuttack", code: "OD" },
+  { name: "Punjab", type: "State", bench: "Punjab and Haryana High Court, Chandigarh", code: "PB" },
+  { name: "Rajasthan", type: "State", bench: "Rajasthan High Court, Jodhpur & Jaipur", code: "RJ" },
+  { name: "Sikkim", type: "State", bench: "High Court of Sikkim, Gangtok", code: "SK" },
+  { name: "Tamil Nadu", type: "State", bench: "Madras High Court, Chennai", code: "TN" },
+  { name: "Telangana", type: "State", bench: "Telangana High Court, Hyderabad", code: "TS" },
+  { name: "Tripura", type: "State", bench: "High Court of Tripura, Agartala", code: "TR" },
+  { name: "Uttar Pradesh", type: "State", bench: "Allahabad High Court & Lucknow Bench", code: "UP" },
+  { name: "Uttarakhand", type: "State", bench: "Uttarakhand High Court, Nainital", code: "UK" },
+  { name: "West Bengal", type: "State", bench: "Calcutta High Court, Kolkata", code: "WB" },
+  // 8 Union Territories
+  { name: "Andaman and Nicobar Islands", type: "Union Territory", bench: "Calcutta High Court Circuit Bench, Port Blair", code: "AN" },
+  { name: "Chandigarh", type: "Union Territory", bench: "Punjab and Haryana High Court, Chandigarh", code: "CH" },
+  { name: "Dadra & Nagar Haveli and Daman & Diu", type: "Union Territory", bench: "High Court of Bombay Jurisdiction", code: "DN" },
+  { name: "Delhi (NCT)", type: "Union Territory", bench: "Delhi High Court, New Delhi", code: "DL" },
+  { name: "Jammu and Kashmir", type: "Union Territory", bench: "High Court of J&K and Ladakh, Srinagar / Jammu", code: "JK" },
+  { name: "Ladakh", type: "Union Territory", bench: "High Court of J&K and Ladakh", code: "LA" },
+  { name: "Lakshadweep", type: "Union Territory", bench: "High Court of Kerala Jurisdiction", code: "LD" },
+  { name: "Puducherry", type: "Union Territory", bench: "Madras High Court Jurisdiction", code: "PY" },
+];
+
 export default function ServicePage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
@@ -409,8 +461,8 @@ export default function ServicePage() {
                   onMouseLeave={() => setActiveCard(null)}
                   className={`relative flex flex-col justify-between p-7 sm:p-9 transition-all duration-300 group ${
                     isYellow
-                      ? "bg-[#ffedba] border border-[#D29E0D] shadow-[0_4px_24px_rgba(210,158,13,0.12)] hover:shadow-[0_12px_36px_rgba(210,158,13,0.22)]"
-                      : "bg-white border border-[#30261C]/20 shadow-[0_4px_20px_rgba(48,38,28,0.04)] hover:shadow-[0_12px_36px_rgba(48,38,28,0.12)]"
+                      ? "bg-[#ffedba] border border-[#D29E0D] shadow-[0_4px_24px_rgba(210,158,13,0.12)]"
+                      : "bg-white border border-[#30261C]/20 shadow-[0_4px_20px_rgba(48,38,28,0.04)]"
                   }`}
                 >
                   {/* Subtle Top Accent Corner Brackets on Hover */}
@@ -518,39 +570,47 @@ export default function ServicePage() {
             })}
           </div>
 
-          {/* Bottom Assurance Banner */}
-          <div className="mt-14 p-6 sm:p-8 border border-dashed border-[#30261C]/30 bg-white/70 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 shrink-0 bg-[#D29E0D]/15 border border-[#D29E0D]/40 flex items-center justify-center">
-                <Scale className="w-6 h-6 text-[#876505]" />
-              </div>
-              <div>
-                <h5 className="text-base sm:text-lg font-bold text-[#30261C]">
-                  Need emergency debt counsel or urgent litigation representation?
-                </h5>
-                <p className="text-xs sm:text-sm text-[#30261C]/70 mt-0.5">
-                  Our advocates are available for prompt confidential evaluation and immediate notice responses.
-                </p>
-              </div>
-            </div>
+          
+        </div>
+      </section>
 
-            <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
-              <Link
-                href="/#contact"
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#D29E0D] text-black text-xs sm:text-sm font-semibold hover:bg-[#30261C] hover:text-white transition-all shadow-sm"
+      {/* Pan-India States & Union Territories Jurisdiction Section */}
+      <section className="relative w-full  bg-[#FAF4EB] py-8 sm:py-10 px-6 sm:px-10 lg:px-16 selection:bg-[#30261C] selection:text-[#FAF4EB]">
+        <div className="mx-auto max-w-7xl">
+          {/* Section Heading & Subheading */}
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+            
+
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#30261C] leading-tight">
+              Pan-India Legal Jurisdiction Across All States & Union Territories
+            </h2>
+
+            <p className="mt-4 text-xs sm:text-sm md:text-base text-[#30261C]/75 leading-relaxed font-normal max-w-2xl">
+              From High Courts and District Sessions to Debt Recovery Tribunals (DRT), NCLT, and consumer dispute forums, our advocate network delivers prompt, strategic legal representation across all 28 States and 8 Union Territories.
+            </p>
+          </div>
+
+          {/* 4 Boxes in a Row Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+            {indianJurisdictions.map((region) => (
+              <div
+                key={region.name}
+                className="group relative flex items-center justify-center border border-[#30261C]/15 bg-[#FAF4EB]/75 p-6 text-center transition-all duration-200 hover:border-[#D29E0D]"
               >
-                <PhoneCall className="w-4 h-4" />
-                <span>Request Case Review</span>
-              </Link>
-            </div>
+                <h4 className="text-base sm:text-lg font-medium tracking-tight text-[#30261C] transition-colors leading-snug text-center">
+                  {region.name}
+                </h4>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* Call to Action Section */}
+      <CTA />
+
       {/* Footer */}
-      <footer className="border-t border-[#30261C]/15 bg-[#FAF4EB] px-6 py-12 text-center text-xs text-[#30261C]/60">
-        <p>© 2025 AMA Legal Solutions. All rights reserved.</p>
-      </footer>
+      <Footer />
     </main>
   );
 }
