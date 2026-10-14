@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface NavItem {
   label: string;
@@ -11,9 +12,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Blogs", href: "#blogs" },
+  { label: "About us", href: "/#about" },
+  { label: "Services", href: "/service" },
+  { label: "Blogs", href: "/#blogs" },
 ];
 
 interface NavbarProps {
@@ -28,31 +29,42 @@ export default function Navbar({
   theme = "dark",
 }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
   const isLight = theme === "light";
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
-    if (href === "/" || href === "#home" || href === "#") {
-      e.preventDefault();
-      setMobileMenuOpen(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    setMobileMenuOpen(false);
+
+    if (href === "/" || href === "#home") {
+      if (pathname === "/") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       return;
     }
 
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      setMobileMenuOpen(false);
-
-      const targetId = href.replace("#", "");
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (href === "/service") {
+      if (pathname === "/service") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
+      return;
+    }
 
-      if (typeof window !== "undefined") {
-        window.history.pushState(null, "", href);
+    if (href.startsWith("#") || href.startsWith("/#")) {
+      const targetId = href.replace(/^\/?#/, "");
+      if (pathname === "/") {
+        e.preventDefault();
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        if (typeof window !== "undefined") {
+          window.history.pushState(null, "", `#${targetId}`);
+        }
       }
     }
   };
@@ -71,8 +83,10 @@ export default function Navbar({
         <Link
           href="/"
           onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            if (pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
           }}
           className="group flex items-center transition-opacity"
         >
@@ -110,8 +124,8 @@ export default function Navbar({
         {/* Right: Book a Call CTA + Mobile Hamburger */}
         <div className="flex items-center gap-3">
           <Link
-            href="#contact"
-            onClick={(e) => handleNavClick(e, "#contact")}
+            href="/#contact"
+            onClick={(e) => handleNavClick(e, "/#contact")}
             className={`inline-flex items-center justify-center  px-5 py-2 text-xs font-medium shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 sm:text-sm ${
               isLight
                 ? "border border-[#30261C]/20 bg-[#30261C]/5 text-[#30261C] hover:bg-[#30261C]/10 hover:border-[#30261C]/30"
