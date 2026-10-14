@@ -115,7 +115,7 @@ export default function Footer() {
 
         {/* Bottom Bar: Copyright & Links (positioned safely above the graphics) */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#30261C]/70">
-          <p>© {new Date().getFullYear()} AMA Legal Solutions. All rights reserved.</p>
+          <p>© 2026 AMA Legal Solutions. All rights reserved.</p>
 
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-[#D29E0D] transition-colors">
