@@ -398,8 +398,8 @@ export default function Navbar({
         {/* Right: Book a Call CTA + Mobile Hamburger */}
         <div className="flex items-center gap-3">
           <Link
-            href="/#contact"
-            onClick={(e) => handleNavClick(e, "/#contact")}
+            href="/contact"
+            onClick={(e) => handleNavClick(e, "/contact")}
             className={`inline-flex items-center justify-center px-5 py-2 text-xs font-medium shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 sm:text-sm ${
               isLight
                 ? "border border-[#30261C]/20 bg-[#30261C]/5 text-[#30261C] hover:bg-[#30261C]/10 hover:border-[#30261C]/30"

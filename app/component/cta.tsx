@@ -17,7 +17,7 @@ export default function CTA({
   title = "Clarity for Your Legal Challenges",
   subtitle = "Strategic, result-driven legal solutions for individuals and businesses across India.",
   primaryBtnText = "Get Legal Help",
-  primaryBtnHref = "/#contact",
+  primaryBtnHref = "/contact",
   secondaryBtnText = "Explore our practice areas →",
   secondaryBtnHref = "/service",
 }: CTAProps) {

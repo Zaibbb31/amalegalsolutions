@@ -356,7 +356,7 @@ export default function ServicePage() {
           {/* Action CTAs */}
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
             <Link
-              href="/#contact"
+              href="/contact"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#30261C] text-[#FAF4EB] text-sm font-semibold hover:bg-[#D29E0D] hover:text-black transition-all duration-200 shadow-sm group cursor-pointer"
             >
               <span>Get Legal Assistance</span>

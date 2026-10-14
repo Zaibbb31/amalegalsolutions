@@ -19,7 +19,7 @@ export default function Footer() {
     { name: "All Practice Areas", href: "/service" },
     { name: "Insight & Articles", href: "/#blogs" },
     { name: "Client Testimonials", href: "/#testimonials" },
-    { name: "Careers & Internships", href: "/#contact" },
+    { name: "Contact & Consultations", href: "/contact" },
   ];
 
   return (
