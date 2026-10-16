@@ -898,7 +898,9 @@ export default function Home() {
       <div className="relative z-20 w-full bg-[#FAF4EB]">
         {/* The AMA Approach Section */}
         <div id="approach">
-          <TrustSection />
+          <div id="about" className="scroll-mt-20">
+            <TrustSection />
+          </div>
         </div>
 
         {/* Client Logos Dual-Row Carousel */}

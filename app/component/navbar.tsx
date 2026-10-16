@@ -12,7 +12,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About us", href: "/#about" },
+  { label: "About us", href: "/about" },
   { label: "Services", href: "/service" },
   { label: "Insight", href: "/#blogs" },
 ];
@@ -157,6 +157,14 @@ export default function Navbar({
 
     if (href === "/service") {
       if (pathname === "/service") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
+    if (href === "/about") {
+      if (pathname === "/about") {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -345,8 +353,8 @@ export default function Navbar({
                           <div className="grid grid-cols-2 gap-3">
                             {/* AMA (Dark Card) */}
                             <Link
-                              href="/#about"
-                              onClick={(e) => handleNavClick(e, "/#about")}
+                              href="/about"
+                              onClick={(e) => handleNavClick(e, "/about")}
                               className="group/card flex min-h-[90px] items-center justify-center gap-2 bg-[#28201A] p-4 text-white shadow-sm transition-all duration-200 hover:bg-[#382E26] hover:shadow-md hover:scale-[1.01]"
                             >
                               <span className="text-[15px] font-semibold tracking-wide">
@@ -515,8 +523,8 @@ export default function Navbar({
 
                         <div className="grid grid-cols-2 gap-2">
                           <Link
-                            href="/#about"
-                            onClick={(e) => handleNavClick(e, "/#about")}
+                            href="/about"
+                            onClick={(e) => handleNavClick(e, "/about")}
                             className="flex items-center justify-center gap-1.5 rounded-xl bg-[#28201A] p-3 text-white text-sm font-medium"
                           >
                             <span>AMA</span>

@@ -142,7 +142,7 @@ export default function CTA({
       <div className="relative z-10 max-w-[588px] mx-auto flex flex-col items-center gap-[24px] md:gap-[30px] px-4 md:px-6">
         {/* Brand Icon Box */}
         <div
-          className="w-[72px] h-[72px] md:w-[85px] md:h-[85px] p-[6px] md:p-[7px] flex justify-center items-center rounded-[10px]"
+          className="w-[72px] h-[72px] md:w-[85px] md:h-[85px] p-[6px] md:p-[7px] flex justify-center items-center"
           style={{
             background: "rgba(210, 158, 13, 0.15)",
             border: "1px solid rgba(210, 158, 13, 0.3)",
@@ -151,7 +151,7 @@ export default function CTA({
           }}
         >
           <div
-            className="w-[60px] h-[60px] md:w-[71px] md:h-[71px] flex-shrink-0 rounded-[6px] flex items-center justify-center bg-[#30261C] shadow-sm"
+            className="w-[60px] h-[60px] md:w-[71px] md:h-[71px] flex-shrink-0 flex items-center justify-center bg-[#30261C] shadow-sm"
             style={{
               filter: "drop-shadow(rgba(0, 0, 0, 0.25) 0px 2px 4px)",
             }}
@@ -188,7 +188,7 @@ export default function CTA({
           <div className="relative w-[150px] md:w-[172px] h-[43px] flex-shrink-0">
             <Link
               href={primaryBtnHref}
-              className="absolute left-0 top-[4px] w-[150px] md:w-[172px] h-[35px] md:h-[39px] flex items-center justify-center gap-[8px] rounded-[47px] border-2 border-[#D29E0D] bg-[#30261C] px-[20px] md:px-[27px] py-[8px] md:py-[10px] hover:bg-[#D29E0D] hover:text-black transition-all shadow-sm group"
+              className="absolute left-0 top-[4px] w-[150px] md:w-[172px] h-[35px] md:h-[39px] flex items-center justify-center gap-[8px] border-2 border-[#D29E0D] bg-[#30261C] px-[20px] md:px-[27px] py-[8px] md:py-[10px] hover:bg-[#D29E0D] hover:text-black transition-all shadow-sm group"
             >
               <span className="text-[#FAF4EB] group-hover:text-black text-[14px] md:text-[16px] font-medium leading-[16px] md:leading-[18px] transition-colors">
                 {primaryBtnText}
